@@ -2,12 +2,12 @@ var keys = require("./keys.js")
 
 var Twitter = require('twitter');
 
-var spotify = require('spotify');
+var spotify = require('node-spotify-api');
 
 var request = require('request');
 
 
-var getMyTweets = function () {
+var getMyTweets = function() {
 
     var client = new Twitter(keys.twitterKeys);
 
@@ -29,11 +29,14 @@ var getArtistNames = function (artist) {
     return artist.name;
 }
 
+
+
 var getMeSpotify = function (songName) {
 
     var spotify = new Spotify(keys.spotifyKeys);
 
     spotify.search({ type: 'track', query: songName }, function (err, data) {
+        
         if (err) {
             console.log('Error occurred: ' + err);
             return;
@@ -53,12 +56,21 @@ var getMeSpotify = function (songName) {
 
 var getMeMovie = function (movieName) {
 
-    request('http://www.omdapi.com/?t=pulp+fiction&y=&plot=short&r=json',
+    request("http://www.omdapi.com/?t=" + movieName + "&y=&plot=short&r=json",
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                console.log(body)
+                console.log("Title: " + jsonData.Title);
+                console.log("Year: " + jsonData.Year);
+                console.log("Rated: " + jsonData.Rated);
+                console.log("IMDB Rating: " + jsonData.imdbRating);
+                console.log("Country: " + jsonData.Country);
+                console.log("Language: " + jsonData.Language);
+                console.log("Plot: " + jsonData.Plot);
+                console.log("Rotten tomaotes rating: " + jsonData.tomatoRating);
+                console.log("Rotten tomaotes URL: " + jsonData.tomatoURL);
             }
         });
+
 }
 
 var pick = function (caseData, functionData) {
@@ -66,7 +78,7 @@ var pick = function (caseData, functionData) {
         case 'my-tweets':
             getMyTweets();
             break;
-        case 'spotify-this-song':
+        case 'spotifysong':
             getMeSpotify(functionData);
             break;
         case 'movie-this':

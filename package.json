@@ -4,6 +4,7 @@
   "description": "",
   "main": "keys.js",
   "dependencies": {
+    "node-spotify-api": "^1.0.7",
     "npm": "^6.0.1",
     "request": "^2.87.0",
     "spotify": "^0.3.0",
