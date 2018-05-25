@@ -1,15 +1,20 @@
+require('dotenv').config()
+
+var fs = require("fs");
+
 var keys = require("./keys.js")
 
 var Twitter = require('twitter');
 
-var spotify = require('node-spotify-api');
+var Spotify = require('node-spotify-api');
 
 var request = require('request');
 
+var keys = require("./keys");
 
 var getMyTweets = function() {
 
-    var client = new Twitter(keys.twitterKeys);
+    var client = new Twitter(keys.twitter);
 
     var params = { screen_name: 'LiriBot2' };
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
@@ -33,7 +38,7 @@ var getArtistNames = function (artist) {
 
 var getMeSpotify = function (songName) {
 
-    var spotify = new Spotify(keys.spotifyKeys);
+    var spotify = new Spotify(keys.spotify);
 
     spotify.search({ type: 'track', query: songName }, function (err, data) {
         
